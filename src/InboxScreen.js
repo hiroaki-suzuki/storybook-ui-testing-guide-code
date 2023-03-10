@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Heading } from '@chakra-ui/react';
-import { Icon } from '@chakra-ui/react';
-import { TaskList } from './components/TaskList';
-import { EmptyState } from './components/EmptyState';
-import { useTasks } from './useTasks';
+import {Box, Heading, Icon} from '@chakra-ui/react';
+import {TaskList} from './components/TaskList';
+import {EmptyState} from './components/EmptyState';
+import {useTasks} from './useTasks';
 
 const FrownIcon = (props) => (
   <Icon
@@ -22,19 +21,23 @@ const FrownIcon = (props) => (
   </Icon>
 );
 
-export const InboxScreen = ({ error }) => {
+export const InboxScreen = ({error}) => {
   const [tasks, dispatch] = useTasks();
 
   const archiveTask = (archive, id) => {
-    dispatch({ type: archive ? 'ARCHIVE_TASK' : 'INBOX_TASK', id });
+    dispatch({type: archive ? 'ARCHIVE_TASK' : 'INBOX_TASK', id});
+  };
+
+  const deleteTask = (id) => {
+    dispatch({type: 'DELETE_TASK', id});
   };
 
   const togglePinTask = (state, id) => {
-    dispatch({ type: state === 'TASK_PINNED' ? 'INBOX_TASK' : 'PIN_TASK', id });
+    dispatch({type: state === 'TASK_PINNED' ? 'INBOX_TASK' : 'PIN_TASK', id});
   };
 
   const editTitle = (title, id) => {
-    dispatch({ type: 'EDIT_TITLE', id, title });
+    dispatch({type: 'EDIT_TITLE', id, title});
   };
 
   if (error) {
@@ -66,6 +69,7 @@ export const InboxScreen = ({ error }) => {
         onArchiveTask={archiveTask}
         onTogglePinTask={togglePinTask}
         onEditTitle={editTitle}
+        onDeleteTask={deleteTask}
       />
     </Box>
   );
